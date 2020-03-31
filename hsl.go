@@ -1,6 +1,9 @@
 package colors
 
-import "math"
+import (
+	"log"
+	"math"
+)
 
 // Hsl represents the HSL model
 type Hsl struct {
@@ -11,6 +14,9 @@ type Hsl struct {
 
 // ToRgb performs a conversion from HSL to RGB
 func (hsl *Hsl) ToRgb() *Rgb {
+	if _, s := check(hsl, hsl.Hue, hsl.Saturation, hsl.Lightness); s != "" {
+		log.Fatal("Error with HSL color: ", s)
+	}
 	var r, g, b float64
 
 	s := float64(hsl.Saturation) / 100.0
@@ -39,18 +45,27 @@ func (hsl *Hsl) ToRgb() *Rgb {
 
 // ToHsv performs a conversion from HSL to HSV
 func (hsl *Hsl) ToHsv() *Hsv {
+	if _, s := check(hsl, hsl.Hue, hsl.Saturation, hsl.Lightness); s != "" {
+		log.Fatal("Error with HSL color: ", s)
+	}
 	rgb := hsl.ToRgb()
 	return rgb.ToHsv()
 }
 
 // ToCmyk performs a conversion from HSL to CMYK
 func (hsl *Hsl) ToCmyk() *Cmyk {
+	if _, s := check(hsl, hsl.Hue, hsl.Saturation, hsl.Lightness); s != "" {
+		log.Fatal("Error with HSL color: ", s)
+	}
 	rgb := hsl.ToRgb()
 	return rgb.ToCmyk()
 }
 
 // ToHex performs a conversion from HSL to HEX
 func (hsl *Hsl) ToHex() *Hex {
+	if _, s := check(hsl, hsl.Hue, hsl.Saturation, hsl.Lightness); s != "" {
+		log.Fatal("Error with HSL color: ", s)
+	}
 	rgb := hsl.ToRgb()
 	return rgb.ToHex()
 }

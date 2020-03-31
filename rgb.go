@@ -3,6 +3,7 @@ package colors
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"math"
 )
 
@@ -15,6 +16,9 @@ type Rgb struct {
 
 // ToHex performs a conversion from RGB model to Hexadecimal one.
 func (rgb *Rgb) ToHex() *Hex {
+	if _, s := check(rgb, rgb.Red, rgb.Green, rgb.Blue); s != "" {
+		log.Fatal("Error with RGB color: ", s)
+	}
 	var hex bytes.Buffer
 	hex.WriteByte('#')
 	hex.WriteString(fmt.Sprintf("%.2x", rgb.Red))
@@ -25,6 +29,9 @@ func (rgb *Rgb) ToHex() *Hex {
 
 // ToHsv performs a conversion from RGB model to HSV one.
 func (rgb *Rgb) ToHsv() *Hsv {
+	if _, s := check(rgb, rgb.Red, rgb.Green, rgb.Blue); s != "" {
+		log.Fatal("Error with RGB color: ", s)
+	}
 	var h, s, v float64
 
 	r1 := float64(rgb.Red) / 255.0
@@ -61,6 +68,9 @@ func (rgb *Rgb) ToHsv() *Hsv {
 
 // ToHsl performs a conversion from RGB to HSL
 func (rgb *Rgb) ToHsl() *Hsl {
+	if _, s := check(rgb, rgb.Red, rgb.Green, rgb.Blue); s != "" {
+		log.Fatal("Error with RGB color: ", s)
+	}
 	var h, s, l float64
 
 	r1 := float64(rgb.Red) / 255.0
@@ -100,6 +110,9 @@ func (rgb *Rgb) ToHsl() *Hsl {
 
 // ToCmyk performs a conversion from RGB to CMYK
 func (rgb *Rgb) ToCmyk() *Cmyk {
+	if _, s := check(rgb, rgb.Red, rgb.Green, rgb.Blue); s != "" {
+		log.Fatal("Error with RGB color: ", s)
+	}
 	var c, m, y, k float64
 
 	r1 := float64(rgb.Red) / 255.0

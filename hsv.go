@@ -1,6 +1,9 @@
 package colors
 
-import "math"
+import (
+	"log"
+	"math"
+)
 
 // Hsv represents the HSV model
 type Hsv struct {
@@ -11,6 +14,9 @@ type Hsv struct {
 
 // ToRgb performs a convertion from HSV to RGB
 func (hsv *Hsv) ToRgb() *Rgb {
+	if _, s := check(hsv, hsv.Hue, hsv.Saturation, hsv.Value); s != "" {
+		log.Fatal("Error with HSV color: ", s)
+	}
 	var r, g, b float64
 
 	s := float64(hsv.Saturation) / 100.0
@@ -39,18 +45,27 @@ func (hsv *Hsv) ToRgb() *Rgb {
 
 // ToHsl performs a conversion from HSV to HSL
 func (hsv *Hsv) ToHsl() *Hsl {
+	if _, s := check(hsv, hsv.Hue, hsv.Saturation, hsv.Value); s != "" {
+		log.Fatal("Error with HSV color: ", s)
+	}
 	rgb := hsv.ToRgb()
 	return rgb.ToHsl()
 }
 
 // ToCmyk performs a conversion from HSV to CMYK
 func (hsv *Hsv) ToCmyk() *Cmyk {
+	if _, s := check(hsv, hsv.Hue, hsv.Saturation, hsv.Value); s != "" {
+		log.Fatal("Error with HSV color: ", s)
+	}
 	rgb := hsv.ToRgb()
 	return rgb.ToCmyk()
 }
 
 // ToHex performs a conversion from HSV to HEX
 func (hsv *Hsv) ToHex() *Hex {
+	if _, s := check(hsv, hsv.Hue, hsv.Saturation, hsv.Value); s != "" {
+		log.Fatal("Error with HSV color: ", s)
+	}
 	rgb := hsv.ToRgb()
 	return rgb.ToHex()
 }
